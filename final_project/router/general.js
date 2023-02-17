@@ -8,7 +8,24 @@ const booksList = Object.values(books);
 
 public_users.post("/register", (req, res) => {
   //Write your code here
-  return res.status(300).json({ message: "Yet to be implemented" });
+
+  const { username, password } = req.body;
+
+  const userExists = users.find((val) => {
+    return val.username === username;
+  });
+
+  if (!userExists) {
+    users.push({ username, password });
+
+    return res
+      .status(200)
+      .json({ message: "The user " + username + " has been registered" });
+  } else {
+    return res
+      .status(403)
+      .json({ message: "The user " + username + " already exists" });
+  }
 });
 
 // Get the book list available in the shop
