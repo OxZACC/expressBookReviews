@@ -29,7 +29,7 @@ public_users.post("/register", (req, res) => {
 });
 
 // Get the book list available in the shop
-public_users.get("/", function (req, res) {
+public_users.get("/", async function (req, res) {
   let findBooks = new Promise((myResolve) => {
     let value = [];
 
@@ -40,9 +40,9 @@ public_users.get("/", function (req, res) {
     }, 3000);
   });
 
-  findBooks.then((value) => {
-    return res.status(200).json(value);
-  });
+  const value = await findBooks;
+
+  return res.status(200).json(value);
 });
 
 // Get book details based on ISBN
